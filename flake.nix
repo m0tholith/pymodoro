@@ -13,7 +13,7 @@
         figlet
       ];
     in
-    {
+    rec {
       devShells.x86_64-linux.default = pkgs.mkShell {
         packages =
           with pkgs;
@@ -22,11 +22,7 @@
           ]
           ++ dependencies;
       };
-      packages.x86_64-linux.default = pkgs.python3Packages.buildPythonApplication {
-        pname = "pymodoro";
-        version = "1.0";
-        propagatedBuildInputs = dependencies;
-        src = ./.;
-      };
+      packages.x86_64-linux.pymodoro = self.packages.x86_64-linux.default;
+      packages.x86_64-linux.default = pkgs.callPackage ./default.nix { };
     };
 }
