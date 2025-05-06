@@ -15,13 +15,18 @@
     in
     {
       devShells.x86_64-linux.default = pkgs.mkShell {
-        packages = with pkgs; [
-          python314
-        ] ++ dependencies;
+        packages =
+          with pkgs;
+          [
+            python314
+          ]
+          ++ dependencies;
       };
-      packages.x86_64-linux.default = pkgs.writers.writePython3 "pymodoro" {
-        libraries = dependencies;
-        flakeIgnore = [ "F401" ];
-      } (builtins.readFile ./main.py);
+      packages.x86_64-linux.default = pkgs.python3Packages.buildPythonApplication {
+        pname = "pymodoro";
+        version = "1.0";
+        propagatedBuildInputs = dependencies;
+        src = ./.;
+      };
     };
 }
