@@ -7,4 +7,9 @@ python3Packages.buildPythonApplication {
   version = "1.0";
   propagatedBuildInputs = [ figlet ];
   src = ./.;
+  
+  build-system = with python3Packages; [
+    setuptools
+  ];
+  pyproject = true;
 }
